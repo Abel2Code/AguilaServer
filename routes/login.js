@@ -17,5 +17,10 @@ router.post('/login', function(req, res) {
         }
     });
 });
+const amazonStorage = require('../services/amazonStorage');
+router.post('/test', amazonStorage.upload.single('profilePhoto')
+, function(req,res) { 
+    
+})
 
 module.exports = router;
