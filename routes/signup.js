@@ -3,8 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const Student = require('../models/student');
+const amazonStorage = require('../services/amazonStorage');
 
-router.post('/signup', function(req, res) {
+router.post('/signup', amazonStorage.upload.single('profilePhoto'), function(req, res) {
 	const saltRounds = 10;
 	const hash = bcrypt.hashSync(req.body.password, saltRounds);
 	
@@ -14,7 +15,6 @@ router.post('/signup', function(req, res) {
 		password: hash,
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
-		profilePhotoLink: req.body.profilePhotoLink,
 		school: req.body.school,
 		classStanding: req.body.classStanding,
 		// majors: ,
