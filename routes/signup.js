@@ -3,22 +3,22 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const Student = require('../models/student');
+const amazonStorage = require('../services/amazonStorage');
 
-router.post('/signup', function(req, res) {
+router.post('/signup', amazonStorage.upload.single('profilePhoto'), function(req, res) {
 	const saltRounds = 10;
 	const hash = bcrypt.hashSync(req.body.password, saltRounds);
 	
 	Student.create({
-		birth_day: req.body.birth_day,
-		birth_month: req.body.birth_month,
-		birth_year: req.body.birth_year,
-		bio: req.body.bio,
-		current_school: req.body.current_school,
-		first_name: req.body.first_name,
-		last_name: req.body.last_name,
-		major: req.body.major,
+		email: req.body.email,
+		phoneNumber: req.body.phoneNumber,
 		password: hash,
-		username: req.body.username.toLowerCase()
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		school: req.body.school,
+		classStanding: req.body.classStanding,
+		// majors: ,
+		// minors:
 	}, function(err){
 		if(err){
 			res.send(err);
@@ -31,27 +31,25 @@ router.post('/signup', function(req, res) {
 // Debugging tools - Will be modified for admin portal PLEASE DELETE
 router.get('/students', function(req, res) {
 	Student.find(function(err, students) {
- 
-
-            if (err)
-                res.send(err)
- 			else
-           		res.json(students); 
-        });
+		if (err)
+			res.send(err)
+		else
+			res.json(students); 
+	});
 })
 
 router.delete('/student/:student_id', function(req, res) {
-		        Student.remove({
-		            _id : req.params.student_id
-		        }, function(err, review) {
-		 			if(err){
-		 				res.send(err);
-		 			} else {
-		 				res.send("User Deleted");	
-		 			}
-		        });
-		       
-		   });  
+	Student.remove({
+		_id : req.params.student_id
+	}, function(err, review) {
+		if(err){
+			res.send(err);
+		} else {
+			res.send("User Deleted");	
+		}
+	});
+	
+});  
 // End Debugging tools
 
 module.exports = router;
