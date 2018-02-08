@@ -2,35 +2,11 @@
 const mongoose = require('mongoose');
 
 const StudentSchema = mongoose.Schema({
- birth_day:{
-    type: Number,
-    required: true
-  },
-  birth_month:{
-    type: Number,
-    required: true
-  },
-  birth_year:{
-    type: Number,
-    required: true
-  },
-  bio:{
-    type: String,
-    required: true
-  }, 
-  current_school:{
+  email:{
     type: String,
     required: true
   },
-  first_name:{
-    type: String,
-     required: true
-  }, 
-  last_name:{
-    type: String,
-    required: true
-  },
-  major:{
+  phoneNumber:{
     type: String,
     required: true
   },
@@ -38,10 +14,34 @@ const StudentSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  username:{
+  firstName:{
     type: String,
+    required: true
+  },
+  lastName:{
+    type: String,
+    required: true
+  },
+  profilePhotoLink:{
+    type: String,
+    required: true
+  },
+  school:{
+    type: String,
+    required: true
+  },
+  classStanding:{
+    type: String,
+    required: true
+  },
+  majors:{
+    type: [String],
+    required: true
+  },
+  minors:{
+    type: [String],
     required: false
-  }
+  },
 });
 
 const Student = module.exports = mongoose.model('Student', StudentSchema);
