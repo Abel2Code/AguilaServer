@@ -14,22 +14,22 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const amazonStorage = require('../services/amazonStorage');
 
-router.post('/signup', amazonStorage.upload.single('profilePhoto'), function(req, res) {
+router.post('/signup', function(req, res) {
 	const saltRounds = 10;
 	const hash = bcrypt.hashSync(req.body.password, saltRounds);
 
 	Student.create({
-		email: req.body.email,
-		phoneNumber: req.body.phoneNumber,
+		birth_day: req.body.birth_day,
+		birth_month: req.body.birth_month,
+		birth_year: req.body.birth_year,
+		bio: req.body.bio,
+		current_school: req.body.current_school,
+		first_name: req.body.first_name,
+		last_name: req.body.last_name,
+		major: req.body.major,
 		password: hash,
-		firstName: req.body.firstName,
-		lastName: req.body.lastName,
-		school: req.body.school,
-		classStanding: req.body.classStanding,
-		// majors: ,
-		// minors:
+		username: req.body.username.toLowerCase()
 	}, function(err){
 		if(err){
 			res.send(err);
