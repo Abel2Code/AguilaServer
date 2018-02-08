@@ -9,6 +9,63 @@ var port = process.env.PORT || 3000;
  
 mongoose.connect('mongodb://localhost/Aguila');
 
+// //Populate Database
+// Run Once
+// const Major = require('./models/major');
+// const College = require('./models/college');
+// let major1 = new Major({
+//     major: 'Computer Science',
+//     school: 'Computer Science'
+// });
+// major1.save((err, data) => {
+//     if (err) throw err;
+// });
+// let major2 = new Major({
+//     major: 'Biology',
+//     school: 'Science'
+// });
+
+// major2.save((err, data) => {
+//     if (err) throw err;
+// });
+
+// let major3 = new Major({
+//     major: 'Buisness',
+//     school: 'Buisness'
+// });
+// major3.save((err, data) => {
+//     if (err) throw err;
+// });
+
+// let college1 = new College({
+//     collegeName: 'University of California Irvine',
+//     state: 'CA',
+//     city: 'Irvine'
+// });
+// college1.save((err, data) => {
+//     if (err) throw err;
+// });
+
+// let college2 = new College({
+//     collegeName: 'University of California Los Angeles',
+//     state: 'CA',
+//     city: 'Los Angeles'
+// });
+// college2.save((err, data) => {
+//     if (err) throw err;
+// });
+
+
+// let college3 = new College({
+//     collegeName: 'California State Univeristy Los Angeles',
+//     state: 'CA',
+//     city: 'Los Angeles'
+// });
+// college3.save((err, data) => {
+//     if (err) throw err;
+// });
+
+
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
