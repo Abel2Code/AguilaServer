@@ -2,9 +2,10 @@ const jwt = require('jsonwebtoken');
 const key = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew=";
 
 
-const signLoginToken = function (id, cb) {
+const signLoginToken = function (email, cb) {
+    // creates the token
     let token = jwt.sign({
-        userID: id
+        email: email
     }, key, {
         expiresIn: '1h'
     });
@@ -38,6 +39,7 @@ const decodeToken = function (param, cb) {
 
 
 const middleware = function (req, res, next) {
+    //checks the token
     let bearerHeader = req.headers["authorization"];
     if (typeof bearerHeader !== 'undefined') {
         verifyToken(bearerHeader, function (result,decoded) {
@@ -47,7 +49,7 @@ const middleware = function (req, res, next) {
                     data: "invalid user session"
                 });
             } else if (result == true) {
-                req.userID = decoded.userID;
+                req.email = decoded.email;
                 next();
             }
         });
