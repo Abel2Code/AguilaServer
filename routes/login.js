@@ -1,4 +1,4 @@
-const express = require('express'); 
+const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
@@ -16,6 +16,23 @@ router.post('/login', function(req, res) {
             res.send({"response": "FOUND"});
         }
     });
+});
+
+router.put('/change_password', function(req, res) {
+  // Check if Valid Token
+
+  // Make sure passwords match
+  if(req.body.password1 != req.body.password2){
+    res.send("Passwords do not match.")
+  } else {
+		//Hash and Salt Password
+		const saltRounds = 10;
+		const hash = bcrypt.hashSync(req.body.password1, saltRounds)
+		
+		//This will not trigger if invalid token.
+		Student.findOneAndUpdate({email: req.body.email}, {password: hash});
+  }
+
 });
 
 module.exports = router;
