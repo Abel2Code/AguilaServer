@@ -1,7 +1,9 @@
 var express  = require('express');
 var app      = express();                            
 var mongoose = require('mongoose');  
-var bodyParser = require('body-parser');                    
+var bodyParser = require('body-parser'); 
+
+require('dotenv').config();
 
 var server = require('http').createServer(app);
 
@@ -68,7 +70,7 @@ mongoose.connect('mongodb://localhost/Aguila');
 
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
-app.use(bodyParser.json({type: 'application/vnd.api+json'}));
+// app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
 app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
