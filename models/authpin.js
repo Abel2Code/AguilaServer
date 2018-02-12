@@ -10,10 +10,10 @@ var AuthPinSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  expireAt: {type: Date, default: 1}
+  expireAt: {type: Date, default: new Date().setHours(new Date().getHours() + 1), expiresAfterSeconds: 10, expires: 10}
 
 });
 
-AuthPinSchema.index({ expireAfterSeconds: 86400 });
+AuthPinSchema.index({ expireAt: 3600 });
 
 const AuthPin = module.exports = mongoose.model('AuthPin', AuthPinSchema);
