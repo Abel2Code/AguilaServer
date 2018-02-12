@@ -1,4 +1,5 @@
 var express  = require('express');
+
 var app      = express();                            
 var mongoose = require('mongoose');  
 var bodyParser = require('body-parser'); 
@@ -8,7 +9,7 @@ require('dotenv').config();
 var server = require('http').createServer(app);
 
 var port = process.env.PORT || 3000;
- 
+
 mongoose.connect('mongodb://localhost/Aguila');
 
 // //Populate Database
@@ -81,9 +82,11 @@ app.use(function(req, res, next) {
 
 const loginRoute = require('./routes/login');
 const signupRoute = require('./routes/signup');
+const emailValidationRoute = require('./routes/emailValidation');
 
 app.use('/api', loginRoute);
 app.use('/api', signupRoute);
+app.use('/api', emailValidationRoute);
 
 app.listen(port);
 console.log("App listening on port " + port);
