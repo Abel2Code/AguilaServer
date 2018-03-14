@@ -1,7 +1,7 @@
 //schema for contacts
 const mongoose = require('mongoose');
 
-var AuthPinSchema = mongoose.Schema({
+let AuthPinSchema = mongoose.Schema({
  email:{
     type: String,
     required: true
@@ -10,7 +10,12 @@ var AuthPinSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  expireAt: {type: Date, default: new Date().setHours(new Date().getHours() + 1), expiresAfterSeconds: 10, expires: 10}
+  expireAt: {
+    type: Date, 
+    default: new Date().setHours(new Date().getHours() + 1), 
+    expiresAfterSeconds: 10, 
+    expires: 10
+  }
 
 });
 

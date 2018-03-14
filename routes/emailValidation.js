@@ -18,7 +18,6 @@ router.post('/email_request', function(req, res){
 	if(req.body.email == undefined){
 		res.send("Error");
 	}
-
 	// Generate a pin
 	console.log("Generating a pin for " + req.body.email);
 	let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -49,7 +48,7 @@ router.post('/email_request', function(req, res){
 			  }
 			});
 
-			res.send("Pin Created");
+			res.send({response: "Pin Created"});
 		}
 	});
 });
@@ -63,9 +62,13 @@ router.delete('/validate_pin', function(req, res) {
  		res.send("Pin or Email Not Found");
   } else{
     if(req.body.newUser == true){
-      res.send("Welcome " + req.body.email + ". SEND JWT FOR creating account");
+      res.send({
+				message : "Welcome " + req.body.email + ". SEND JWT FOR creating account"
+			});
     } else {
-      res.send("Welcome " + req.body.email + ". SEND JWT FOR reset password.");
+      res.send({
+				message: "Welcome " + req.body.email + ". SEND JWT FOR reset password."
+			});
     }
  	}
  	});
