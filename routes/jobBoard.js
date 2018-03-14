@@ -20,3 +20,9 @@ router.post('/postQueston', jwt.middleware, function(req, res) {
 		}
 	});
 });
+
+router.post('/acceptJob', jwt.middleware, function(req, res) {
+
+})
+
+module.exports = router;
