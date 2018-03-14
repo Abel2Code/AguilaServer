@@ -59,15 +59,17 @@ router.delete('/validate_pin', function(req, res) {
       pin : req.body.pin
  	}, function(err, review) {
  	if(err || review.n == 0){
- 		res.send("Pin or Email Not Found");
+ 		res.send({
+			 valid : 0
+		 });
   } else{
     if(req.body.newUser == true){
       res.send({
-				message : "Welcome " + req.body.email + ". SEND JWT FOR creating account"
+				valid : 1
 			});
     } else {
       res.send({
-				message: "Welcome " + req.body.email + ". SEND JWT FOR reset password."
+				valid: 1
 			});
     }
  	}
