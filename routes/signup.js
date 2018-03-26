@@ -14,7 +14,8 @@ router.post('/signup', amazonStorage.upload.single('pic'), function(req, res) {
 	let newUser = new User({
 		email: req.body.email,
 		password: hash,
-		name: req.body.name,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
 		school: req.body.school,
 		classStanding: req.body.classStanding,
 		shareInfo: req.body.shareInfo,
@@ -25,7 +26,7 @@ router.post('/signup', amazonStorage.upload.single('pic'), function(req, res) {
 			res.send(err);
 		} else {
 			jwt.signLoginToken(req.body.email,(token) => {
-				res.send({message : "User Created", token : token});
+				res.send({valid: 1, message : "User Created", token : token});
 			})
 			console.log("created");
 		}

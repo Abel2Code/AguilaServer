@@ -6,7 +6,6 @@ const JobBoard = require('../models/jobBoard');
 
 router.post('/postQueston', jwt.middleware, function(req, res) {
 	let newQuestion = new JobBoard({
-        title : req.body.title,
         author : req.body.userID,
         description : req.body.body,
         matchedStatus : 0,
@@ -21,7 +20,7 @@ router.post('/postQueston', jwt.middleware, function(req, res) {
 	});
 });
 
-router.post('/acceptJob', jwt.middleware, function(req, res) {
+router.get('/job', jwt.middleware, function(req, res) {
 
 })
 

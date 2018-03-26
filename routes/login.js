@@ -10,10 +10,10 @@ router.post('/login', function(req, res) {
         console.log(req.body);
         if(student.length == 0 || !bcrypt.compareSync(req.body.password, student[0].password)){
         	console.log("not found");
-            res.send({response: "INVALID USERNAME OR PASSWORD"});
+            res.send({valid: 0});
         } else{
             jwt.signLoginToken(req.body.email, (token) =>{
-                res.send({response: "FOUND", token: token});
+                res.send({valid: 1, token: token});
             });
         }
     });
