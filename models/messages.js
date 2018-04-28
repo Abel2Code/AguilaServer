@@ -8,7 +8,7 @@ let MessagesSchema = mongoose.Schema({
     },
     messages:{
         type: [{
-            users: [users],
+            users: [],
             conversation: [{
                 timeStamp: String,
                 message: String,

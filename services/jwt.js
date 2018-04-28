@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const key = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew=";
 
-const signLoginToken = function (email, cb) {
+const signLoginToken = function (id, email, cb) {
     // creates the token
     let token = jwt.sign({
         email: email

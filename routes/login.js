@@ -12,8 +12,8 @@ router.post('/login', function(req, res) {
         	console.log("not found");
             res.send({valid: 0});
         } else{
-            jwt.signLoginToken(req.body.email, (token) =>{
-                res.send({valid: 1, token: token});
+            jwt.signLoginToken(student._id, req.body.email, (token) =>{
+                res.send({valid: 1, token: token, id: student[0]._id});
             });
         }
     });
@@ -29,7 +29,7 @@ router.put('/change_password', function(req, res) {
 		//Hash and Salt Password
 		const saltRounds = 10;
 		const hash = bcrypt.hashSync(req.body.password1, saltRounds)
-		
+
 		//This will not trigger if invalid token.
 		Student.findOneAndUpdate({email: req.body.email}, {password: hash});
   }

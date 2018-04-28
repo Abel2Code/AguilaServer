@@ -25,7 +25,13 @@ let JobBoardSchema = mongoose.Schema({
     matchedStatus: {
         type: Boolean,
         required: true
-    }
+    }, mentor: {
+      type: String
+    },
+    messages: [{
+      isMentor: Boolean,
+      message: String
+    }]
 })
 
 const JobBoard = module.exports = mongoose.model('JobBoard', JobBoardSchema);

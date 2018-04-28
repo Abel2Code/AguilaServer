@@ -25,9 +25,9 @@ router.post('/signup', amazonStorage.upload.single('pic'), function(req, res) {
 		if(err){
 			res.send(err);
 		} else {
-			jwt.signLoginToken(req.body.email,(token) => {
-				res.send({valid: 1, message : "User Created", token : token});
-			})
+			// jwt.signLoginToken(req.body.email,(token) => {
+			// 	res.send({valid: 1, message : "User Created", token : token});
+			// })
 			console.log("created");
 		}
 	});
@@ -35,7 +35,7 @@ router.post('/signup', amazonStorage.upload.single('pic'), function(req, res) {
 
 // Debugging tools - Will be modified for admin portal PLEASE DELETE
 router.get('/students', function(req, res) {
-	Student.find(function(err, students) {
+	User.find(function(err, students) {
             if (err)
                 res.send(err)
  			else
@@ -44,7 +44,7 @@ router.get('/students', function(req, res) {
 });
 
 router.delete('/student/:student_id', function(req, res) {
-      Student.remove({
+      User.remove({
           _id : req.params.student_id
       }, function(err, review) {
 			if(err){
