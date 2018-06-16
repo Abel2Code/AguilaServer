@@ -35,7 +35,7 @@ let UserSchema = mongoose.Schema({
         required: false
     },
     mentorStatus: {
-        type: String,
+        type: Boolean,
         required: true
     },
     ghostPoints: {

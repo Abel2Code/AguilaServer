@@ -19,6 +19,7 @@ router.post('/signup', amazonStorage.upload.single('pic'), function(req, res) {
 		school: req.body.school,
 		classStanding: req.body.classStanding,
 		shareInfo: req.body.shareInfo,
+		mentorStatus: req.body.mentorStatus
 	});
 
 	newUser.save((err, data) => {

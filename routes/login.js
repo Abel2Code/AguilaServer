@@ -13,7 +13,14 @@ router.post('/login', function(req, res) {
             res.send({valid: 0});
         } else{
             jwt.signLoginToken(student._id, req.body.email, (token) =>{
-                res.send({valid: 1, token: token, id: student[0]._id});
+							console.log(student[0]);
+							console.log(student[0].mentorStatus);
+							if(student[0].mentorStatus){
+								res.send({valid: 2, token: token, id: student[0]._id});
+							} else {
+								res.send({valid: 1, token: token, id: student[0]._id});
+							}
+
             });
         }
     });
