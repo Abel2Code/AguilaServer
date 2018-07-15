@@ -8,7 +8,6 @@ const User = require('../models/user');
 router.post('/login', function(req, res) {
 	User.find({email: req.body.email}, function(err, student){
         if(student.length == 0 || !bcrypt.compareSync(req.body.password, student[0].password)){
-        	console.log("not found");
             res.send({valid: 0});
         } else{
             jwt.signLoginToken(student[0]._id, req.body.email, student[0].mentorStatus, (token) =>{

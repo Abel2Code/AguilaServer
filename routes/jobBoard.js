@@ -67,7 +67,7 @@ router.get('/unansweredJobs/:key', function(req, res){
 
 });
 
-router.put('/startConversation', function(req, res){
+router.put('/startConversation/:key', function(req, res){
 	jwt.verifyToken(req.params.key, (valid) => {
 		if(valid){
 			jwt.decodeToken(req.params.key, (err, token) => {
@@ -97,19 +97,25 @@ router.put('/startConversation', function(req, res){
 		}});
 });
 
-router.put('/jobMatch', function(req, res){
+router.put('/jobMatch/:key', function(req, res){
 	jwt.verifyToken(req.params.key, (valid) => {
 		if(valid){
+			jwt.decodeToken(req.params.key, (err, token) => {
+				if(err){
+					res.json(err);
+					return;
+				}
 			JobBoard.findOne({_id: req.body.id }, function (err, job){
 				if(job.matchedStatus){
 					res.json({success: false});
 				} else {
 					job.matchedStatus = true;
-					job.mentor = req.body.mentorId;
+					job.mentor = token.id;
 				 	job.save();
 					res.json({success: true});
 				}
 			});
+		});
 		} else {
 			res.json(constants.BAD_TOKEN)
 		}
@@ -188,7 +194,7 @@ router.get('/conversations_m/:key', function(req, res) {
 
 });
 
-router.delete('/job/:job_id', function(req, res) {
+router.delete('/job/:job_id/:key', function(req, res) {
 	jwt.verifyToken(req.params.key, (valid) => {
 		if(valid){
 			JobBoard.remove({

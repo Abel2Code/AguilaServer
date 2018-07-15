@@ -4,7 +4,7 @@ const router = express.Router();
 const Messages = require('../models/messages');
 const JobBoard = require('../models/jobBoard')
 
-router.get('/job', function(req, res) {
+router.get('/job/:key', function(req, res) {
   jwt.verifyToken(req.params.key, (valid) => {
 		if(valid){
 			jwt.decodeToken(req.params.key, (err, token) => {
@@ -28,7 +28,7 @@ router.get('/job', function(req, res) {
     }});
 })
 
-router.put('/sendMessage', function(req, res) {
+router.put('/sendMessage/:key', function(req, res) {
   jwt.verifyToken(req.params.key, (valid) => {
 		if(valid){
 			jwt.decodeToken(req.params.key, (err, token) => {
