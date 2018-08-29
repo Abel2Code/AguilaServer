@@ -6,6 +6,9 @@ const jwt = require('../services/jwt')
 
 const JobBoard = require('../models/jobBoard');
 
+const socketExports = require('../global/socketio.js');
+const createConversationSocket = socketExports.createConversationSocket;
+
 router.post('/postQuestion/:key', function(req, res) {
 	jwt.verifyToken(req.params.key, (valid) => {
 		if(valid){
@@ -82,12 +85,17 @@ router.put('/startConversation/:key', function(req, res){
 							message: req.body.description
 						});
 
+						createConversationSocket(job._id);
+
+
 						job.messages.push({
 							isMentor: true,
 							message: req.body.response
 						});
 
 						job.save();
+						// TODO: Create Socket Here
+
 						res.json({success: true});
 					} else {
 						res.json({success: false});

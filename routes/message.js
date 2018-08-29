@@ -2,53 +2,60 @@ const express = require('express');
 const router = express.Router();
 
 const Messages = require('../models/messages');
-const JobBoard = require('../models/jobBoard')
+const JobBoard = require('../models/jobBoard');
 
-router.get('/job/:key', function(req, res) {
+const jwt = require('../services/jwt')
+
+const socketExports = require('../global/socketio.js');
+const createConversationSocket = socketExports.createConversationSocket;
+
+router.get('/getMessages/:job/:key', function(req, res) {
   jwt.verifyToken(req.params.key, (valid) => {
-		if(valid){
-			jwt.decodeToken(req.params.key, (err, token) => {
-				if(err){
-					res.json(err);
-					return;
-				}
-        Messages.find({
-          users: {
-            "$in": [token.id]
-          }
-        }, function(err, messages) {
+    if (valid) {
+      jwt.decodeToken(req.params.key, (err, token) => {
+        if (err) {
+          res.json(err);
+          return;
+        }
+        JobBoard.findOne({
+          _id: req.params.job
+        }, function(err, jobBoard) {
           if (err) {
             res.send(err);
             return;
-          } else {
-            res.send(messages);
           }
-        });
+          createConversationSocket(req.params.job);
+
+          res.send(jobBoard.messages);
+        })
       });
-    }});
-})
+    }
+  });
+});
 
 router.put('/sendMessage/:key', function(req, res) {
   jwt.verifyToken(req.params.key, (valid) => {
-		if(valid){
-			jwt.decodeToken(req.params.key, (err, token) => {
-				if(err){
-					res.json(err);
-					return;
-				}
-        JobBoard.findOne({_id: req.body.job}, function(err, jobBoard){
-          if(err){
+    if (valid) {
+      jwt.decodeToken(req.params.key, (err, token) => {
+        if (err) {
+          res.json(err);
+          return;
+        }
+        JobBoard.findOne({
+          _id: req.body.job
+        }, function(err, jobBoard) {
+          if (err) {
             res.send(err);
             return;
           }
-          if(!(token.id == jobBoard.author || token.id == jobBoard.mentor)){
+          if (!(token.id == jobBoard.author || token.id == jobBoard.mentor)) {
             res.send('Invalid Credentials');
             return;
           }
           let isMentor = true;
-          if(token.id == jobBoard.author){
+          if (token.id == jobBoard.author) {
             isMentor = false;
-          } else{
+          } else {
             console.log(req.body.userId, jobBoard.author)
           }
           jobBoard.messages.push({
@@ -56,12 +63,15 @@ router.put('/sendMessage/:key', function(req, res) {
             message: req.body.message
           })
 
-          jobBoard.save(function(err){
-             if (err) return handleError(err);
+          jobBoard.save(function(err) {
+            if (err) return handleError(err);
+            // If Socket was not created, Create interval
+            // Send message through Socket.
           })
         })
       })
-    }});
+    }
+  });
 })
 
 module.exports = router;

@@ -6,17 +6,13 @@ const jwt = require('../services/jwt')
 const User = require('../models/user');
 
 router.post('/login', function(req, res) {
-	User.find({email: req.body.email}, function(err, student){
-        if(student.length == 0 || !bcrypt.compareSync(req.body.password, student[0].password)){
+	User.findOne({email: req.body.email}, function(err, student){
+		console.log(student);
+        if(student.length == 0 || !bcrypt.compareSync(req.body.password, student.password)){
             res.send({valid: 0});
         } else{
-            jwt.signLoginToken(student[0]._id, req.body.email, student[0].mentorStatus, (token) =>{
-							if(student[0].mentorStatus){
-								res.send({valid: 2, token: token, id: student[0]._id});
-							} else {
-								res.send({valid: 1, token: token, id: student[0]._id});
-							}
-
+            jwt.signLoginToken(student._id, req.body.email, student.mentorStatus, (token) =>{
+								res.send({valid: student.mentorStatus == true ? 2: 1, token: token, id: student._id});
             });
         }
     });
