@@ -51,6 +51,7 @@ const jobBoardRoute = require('./routes/jobBoard');
 const messageRoute = require('./routes/message');
 const rewardRoute = require('./routes/reward');
 const surveyRoute = require('./routes/survey');
+const userRoute = require('./routes/user');
 
 app.use('/api', loginRoute);
 app.use('/api', signupRoute);
@@ -59,7 +60,7 @@ app.use('/api', jobBoardRoute);
 app.use('/api', messageRoute);
 app.use('/api', rewardRoute);
 app.use('/api', surveyRoute);
-
+app.use('/api', userRoute);
 
 server.listen(port);
 console.log("App listening on port " + port);

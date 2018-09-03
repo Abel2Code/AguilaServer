@@ -39,7 +39,6 @@ router.post('/postQuestion/:key', function(req, res) {
 						res.send(err);
 					} else {
 			      res.send({message : "Question Posted"});
-						console.log("created");
 					}
 				});
 			});

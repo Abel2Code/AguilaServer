@@ -55,9 +55,8 @@ router.put('/sendMessage/:key', function(req, res) {
           let isMentor = true;
           if (token.id == jobBoard.author) {
             isMentor = false;
-          } else {
-            console.log(req.body.userId, jobBoard.author)
           }
+          
           jobBoard.messages.push({
             isMentor: isMentor,
             message: req.body.message

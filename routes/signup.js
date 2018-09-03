@@ -26,9 +26,9 @@ router.post('/signup', amazonStorage.upload.single('pic'), function(req, res) {
 		if(err){
 			res.send(err);
 		} else {
-			// jwt.signLoginToken(req.body.email,(token) => {
-			// 	res.send({valid: 1, message : "User Created", token : token});
-			// })
+			jwt.signLoginToken(req.body.email,(token) => {
+				res.send({valid: 1, message : "User Created", token : token});
+			})
 			console.log("created");
 		}
 	});
