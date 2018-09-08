@@ -7,6 +7,10 @@ const User = require('../models/user');
 
 router.post('/login', function(req, res) {
 	User.findOne({email: req.body.email}, function(err, student){
+		if(err){
+			res.json(err);
+			return;
+		}
         if(student.length == 0 || !bcrypt.compareSync(req.body.password, student.password)){
             res.send({valid: 0});
         } else{
