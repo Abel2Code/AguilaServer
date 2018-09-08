@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-const AuthPin = require('../models/AuthPin');
+const AuthPin = require('../models/authPin');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
